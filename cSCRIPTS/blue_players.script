@@ -1,0 +1,48 @@
+local g = require("cSCRIPTS.game")
+
+local function anim_reset()
+	sprite.play_flipbook("#sprite", "idle")
+	msg.post("#attack", "disable")
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.target_id = nil
+
+	msg.post("#attack", "disable")
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("collision_response") then
+		if message.other_group then
+			
+			pprint(g.players)
+			self.target_id = g.players
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("up") then 
+		g.room:send("move", { direction = "up" })
+	elseif action_id == hash("down") then 
+		g.room:send("move", { direction = "down" })
+	elseif action_id == hash("left") then 
+		g.room:send("move", { direction = "left" })
+	elseif action_id == hash("right") then 
+		g.room:send("move", { direction = "right" })
+	elseif action_id == hash("attack") and action.pressed then
+		msg.post("#attack", "enable")
+		sprite.play_flipbook("#sprite", "attack", anim_reset)
+		
+		
+			g.room:send("attack", { target_id = self.target_id })
+		
+	end
+end

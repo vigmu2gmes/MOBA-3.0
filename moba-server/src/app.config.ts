@@ -5,7 +5,7 @@ import { playground } from "@colyseus/playground";
 /**
  * Import your Room files
  */
-import { MyRoom } from "./rooms/MyRoom";
+import { my_game } from "./rooms/game";
 
 export default config({
 
@@ -13,7 +13,7 @@ export default config({
         /**
          * Define your room handlers:
          */
-        gameServer.define('my_room', MyRoom);
+        gameServer.define('match', my_game);
 
     },
 
@@ -30,9 +30,9 @@ export default config({
          * Use @colyseus/playground
          * (It is not recommended to expose this route in a production environment)
          */
-        if (process.env.NODE_ENV !== "production") {
-            app.use("/", playground());
-        }
+        //if (process.env.NODE_ENV !== "production") {
+        //    app.use("/", playground());
+        //}
 
         /**
          * Use @colyseus/monitor

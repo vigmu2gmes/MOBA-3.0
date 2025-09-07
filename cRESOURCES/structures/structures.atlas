@@ -1,0 +1,13 @@
+images {
+  image: "/cRESOURCES/structures/png/blue_base.png"
+}
+images {
+  image: "/cRESOURCES/structures/png/border.png"
+}
+images {
+  image: "/cRESOURCES/structures/png/red_base.png"
+}
+images {
+  image: "/cRESOURCES/structures/png/tower.png"
+}
+extrude_borders: 2

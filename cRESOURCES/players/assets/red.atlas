@@ -1,0 +1,20 @@
+animations {
+  id: "idle"
+  images {
+    image: "/cRESOURCES/players/png/punch_anim_red/player1.png0001.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  flip_horizontal: 1
+}
+animations {
+  id: "attack"
+  images {
+    image: "/cRESOURCES/players/png/punch_anim_red/player1.png0005.png"
+  }
+  images {
+    image: "/cRESOURCES/players/png/punch_anim_red/player1.png0006.png"
+  }
+  fps: 4
+  flip_horizontal: 1
+}
+extrude_borders: 2

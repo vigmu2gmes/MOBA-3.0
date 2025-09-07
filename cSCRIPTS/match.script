@@ -1,0 +1,7 @@
+local g = require("cSCRIPTS.game")
+
+function init(self)
+	g.create(self)
+
+	
+end

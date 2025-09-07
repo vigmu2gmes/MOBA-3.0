@@ -1,2 +1,22 @@
 name: "loader"
 scale_along_z: 0
+embedded_instances {
+  id: "loader"
+  data: "components {\n"
+  "  id: \"loader\"\n"
+  "  component: \"/cSCRIPTS/loader.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"lobby\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/COLLECTIONS/lobby.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"match\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/COLLECTIONS/match.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}

@@ -1,0 +1,4 @@
+images {
+  image: "/cRESOURCES/projectiles/png/projectile.png"
+}
+extrude_borders: 2
