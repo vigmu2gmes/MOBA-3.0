@@ -52,8 +52,9 @@ export class my_game extends Room<game_state> {
 	this.state.bases.set("blue", new Base().assign({ team: "blue", x: 94, y: 281  }));
 
 	for (let i = 0; i < 2; i++) {
-		this.state.towers.set("neutral", new Tower().assign({ team: "neutral", x: 563, y: 877 - i * 361  }));
+		this.state.towers.set("neutral", new Tower().assign({ team: "neutral", x: 500, y: 877 - i * 361  }));
 	}
+
 
 	this.onMessage("move", (client, message) => {
 	const speed = 5;
@@ -70,12 +71,28 @@ export class my_game extends Room<game_state> {
 	const attacker = this.state.players[client.sessionId];
 	const target_id = message.target_id;
 	const target = this.state.players[target_id];
-	console.log(target_id);
-	console.log(target);
 
 	if (attacker && target) {
 		target.hp = Math.max(0, target.hp - 20);
-		console.log(`${attacker.id} attacked ${target.id}, HP: ${target.hp}`);
+		//console.log(`${attacker.id} attacked ${target.id}, HP: ${target.hp}`);
+		}
+	});
+
+	this.onMessage("attack_structure", (client, message) => {
+		let target;
+		if ( message.type === "hash: [tower_hitbox]" ) {
+			target = this.state.towers.get(message.id);
+		} 
+		else if ( message.type === "hash: [red_base_hitbox]" ) {
+			target = this.state.bases.get(message.id);
+		} 
+		else if ( message.type === "hash: [blue_base_hitbox]" ) {
+			target = this.state.bases.get(message.id);
+		}
+
+		if (target) {
+			target.hp = Math.max(0, target.hp - message.damage);
+			console.log(`${message.type} received ${message.damage}. HP = ${target.hp}.`);
 		}
 	});
 	}

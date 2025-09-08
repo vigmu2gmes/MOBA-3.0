@@ -23,7 +23,7 @@ function game.create(self)
 			else
 				self.bf = factory.create("#blue_team", vmath.vector3(player.x, player.y, 0), nil, { name = hash(sessionId) }, 1)
 			end
-			print(self.bf)
+			
 			game.players = game.player or {}
 			game.players[sessionId] = self.bf
 			
@@ -40,12 +40,20 @@ function game.create(self)
 			end)	
 
 			game.cb:listen(player, "hp", function(n) 
-				print(n)
+				--print(n)
 			end)	
 		end)
 
-		game.cb:on_add("bases", function(base)
-			pprint(base)
+		game.cb:on_add("bases", function(base, key)
+			game.bases = game.bases or {}
+			
+			game.bases[key] = factory.create("#" .. key .. "_base", vmath.vector3(base.x, base.y, 0), nil, { team = hash(base.team) }, 0.45)
+		end)
+
+		game.cb:on_add("towers", function(towers, key) 
+			game.towers = game.towers or {}
+			
+			game.towers[key] = factory.create("#" .. key, vmath.vector3(towers.x, towers.y, 0), nil, { team = hash(towers.team) }, 1)
 		end)
 
 		

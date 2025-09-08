@@ -19,10 +19,18 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		go.set_position(go.get_position() + message.normal * message.distance)
+	end
+
 	if message_id == hash("collision_response") then
-		if message.other_group then
-			pprint(g.players)
-			self.target_id = g.players
+		if message.own_group == hash("red_attack") then
+			if message.other_group == hash("blue_base_hitbox") then
+				self.key = "blue"
+			elseif message.other_group == hash("tower_hitbox") then
+				self.key = "neutral"
+			end
+			g.room:send("attack_structure", { id = self.key, type = tostring(message.other_group), damage = 5 })
 		end
 	end
 end

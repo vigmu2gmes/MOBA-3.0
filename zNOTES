@@ -7,10 +7,5 @@ Client:
 	Visual representation. 
 	Send inputs/actions.
 
-Steps:
-	1. Set up Colyseus + Defold Communication.
-	2. Define player schema and sync positions.
-	3. Handle input and movement.
-	4. Add health bars and combat.
-	5. Implement teams, lanes, and objectives.
+Health Bars for players, towers, and bases.
 
