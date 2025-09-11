@@ -1,0 +1,4 @@
+images {
+  image: "/cRESOURCES/minions/png/minion.png"
+}
+extrude_borders: 2

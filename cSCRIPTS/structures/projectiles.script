@@ -1,0 +1,24 @@
+local g = require("cSCRIPTS.GAME.game")
+
+go.property("id", hash(""))
+
+function init(self)
+	print(self.id)
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("collision_response") then
+		local target_session_id = g.go_to_session and g.go_to_session[message.other_id]
+		if message.other_group == hash("player") then
+			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, go.get_position(message.other_id), go.EASING_LINEAR, 1)
+		elseif message.other_group == hash("blue_hitbox") then
+			go.delete()
+			
+			g.room:send("projectile_destroyed", { p = tostring(self.id), t = target_session_id, damage = 5 })
+		elseif message.other_group == hash("red_hitbox") then
+			go.delete()
+			g.room:send("projectile_destroyed", { p = tostring(self.id), t = target_session_id, damage = 5 })
+		end
+	end
+end

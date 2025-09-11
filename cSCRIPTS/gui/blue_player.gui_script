@@ -1,0 +1,17 @@
+local g = require("cSCRIPTS.GAME.game")
+
+function init(self)
+	gui.set_size(gui.get_node("health_bar"), vmath.vector4(g.initial_player_health, 5, 0, 0))
+	
+end
+
+function update(self, dt)
+	gui.set_position(gui.get_node("health_bar"), vmath.vector3(g.pos.x, g.pos.y, 0))
+
+	print(g.current_player_health)
+	gui.set_size(gui.get_node("health_bar"), vmath.vector4(g.current_player_health, 5, 0, 0))
+end
+
+function on_message(self, message_id, message, sender)
+
+end

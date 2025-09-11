@@ -2,6 +2,10 @@ components {
   id: "towers"
   component: "/cSCRIPTS/structures/towers.script"
 }
+components {
+  id: "towers1"
+  component: "/cpGUI/towers.gui"
+}
 embedded_components {
   id: "sprite"
   type: "sprite"

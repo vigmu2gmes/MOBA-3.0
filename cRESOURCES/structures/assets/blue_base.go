@@ -1,6 +1,10 @@
 components {
-  id: "bases"
-  component: "/cSCRIPTS/structures/bases.script"
+  id: "blue_base"
+  component: "/cpGUI/blue_base.gui"
+}
+components {
+  id: "blue_base1"
+  component: "/cSCRIPTS/structures/blue_base.script"
 }
 embedded_components {
   id: "sprite"

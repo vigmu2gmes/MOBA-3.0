@@ -1,0 +1,20 @@
+local g = require("cSCRIPTS.GAME.game")
+
+go.property("id", hash(""))
+
+function init(self)
+	print("Spawned minion with hashed ID:", self.id)
+
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("collision_response") then
+		if message.other_group == hash("blue_attack") then
+			local original_id = g.id_lookup[self.id]
+			g.room:send("attack", { id = original_id, type = "hash: [minion]", damage = 25})
+		elseif message.other_group == hash("red_attack") then
+			local original_id = g.id_lookup[self.id]
+			g.room:send("attack", { id = original_id, type = "hash: [minion]", damage = 25 })
+		end
+	end
+end

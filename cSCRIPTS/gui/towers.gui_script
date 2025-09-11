@@ -1,0 +1,9 @@
+local g = require("cSCRIPTS.GAME.game")
+
+function init(self)
+	gui.set_size(gui.get_node("health"), vmath.vector4(g.base_tower_health, 10, 0, 0))
+end
+
+function update(self, dt)
+	gui.set_size(gui.get_node("health"), vmath.vector4(g.tower_damage_report, 10, 0, 0))
+end

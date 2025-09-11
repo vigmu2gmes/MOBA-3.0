@@ -1,0 +1,17 @@
+local g = require("cSCRIPTS.game")
+
+local function enable_collider()
+	msg.post("#blue_base_hitbox", "enable")
+end
+
+function init(self)
+	timer.delay(1, true, enable_collider)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("collision_response") then
+		if message.other_group == hash("red_attack") then
+			msg.post("#blue_base_hitbox", "disable")
+		end
+	end
+end

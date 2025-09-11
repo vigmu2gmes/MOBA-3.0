@@ -18,48 +18,50 @@ function game.create(self)
 		game.cb = game.c.callbacks(game.room)
 
 		game.cb:on_add("players", function(player, sessionId)
-			if player.id % 2 == 0 then
-				self.bf = factory.create("#red_team", vmath.vector3(player.x, player.y, 0), nil, { name = hash(sessionId) }, 1)
-			else
-				self.bf = factory.create("#blue_team", vmath.vector3(player.x, player.y, 0), nil, { name = hash(sessionId) }, 1)
-			end
-			
-			game.players = game.player or {}
-			game.players[sessionId] = self.bf
-			
-			game.cb:listen(player, "x", function(n, p)
-				local pos = go.get_position(self.bf)
-				pos.x = n
-				go.set_position(pos, self.bf)
+			local team = player.id % 2 == 0 and "red" or "blue"
+			local pos = vmath.vector3(player.x, player.y, 0)
+			local factory_id = team == "red" and "#red_team" or "#blue_team"
+			local player_go = factory.create(factory_id, pos, nil, { name = hash(sessionId) }, 1)
+
+			game.players = game.players or {}
+			game.players[sessionId] = player_go
+
+			player_gui.create_health_bar(sessionId, team, player.x, player.y)
+
+			game.cb:listen(player, "x", function(new_x)
+				local player_go = game.players[sessionId]
+				if player_go then
+					local pos = go.get_position(player_go)
+					pos.x = new_x
+					go.set_position(pos, player_go)
+					player_gui.update_health_bar_position(sessionId, new_x, pos.y)
+				end
 			end)
 
-			game.cb:listen(player, "y", function(n, p)
-				local pos = go.get_position(self.bf)
-				pos.y = n
-				go.set_position(pos, self.bf)
-			end)	
+			game.cb:listen(player, "y", function(new_y)
+				local player_go = game.players[sessionId]
+				if player_go then
+					local pos = go.get_position(player_go)
+					pos.y = new_y
+					go.set_position(pos, player_go)
+					player_gui.update_health_bar_position(sessionId, pos.x, new_y)
+				end
+			end)
 
-			game.cb:listen(player, "hp", function(n) 
-				--print(n)
-			end)	
+			game.cb:listen(player, "hp", function(hp)
+				player_gui.update_health_bar_value(sessionId, hp)
+			end)
 		end)
 
-		game.cb:on_add("bases", function(base, key)
-			game.bases = game.bases or {}
-			
-			game.bases[key] = factory.create("#" .. key .. "_base", vmath.vector3(base.x, base.y, 0), nil, { team = hash(base.team) }, 0.45)
+		game.cb:on_remove("players", function(player, sessionId)
+			local player_go = game.players[sessionId]
+			if player_go then
+				go.delete(player_go)
+				game.players[sessionId] = nil
+			end
+			player_gui.remove_health_bar(sessionId)
 		end)
-
-		game.cb:on_add("towers", function(towers, key) 
-			game.towers = game.towers or {}
-			
-			game.towers[key] = factory.create("#" .. key, vmath.vector3(towers.x, towers.y, 0), nil, { team = hash(towers.team) }, 1)
-		end)
-
-		
 	end)
 end
-
-
 
 return game

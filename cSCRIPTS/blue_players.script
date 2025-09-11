@@ -1,8 +1,9 @@
-local g = require("cSCRIPTS.game")
+local g = require("cSCRIPTS.GAME.game")
 
-local function anim_reset()
+local function anim_reset(self)
 	sprite.play_flipbook("#sprite", "idle")
 	msg.post("#attack", "disable")
+
 end
 
 function init(self)
@@ -10,6 +11,7 @@ function init(self)
 	self.target_id = nil
 
 	msg.post("#attack", "disable")
+	
 end
 
 function update(self, dt)
@@ -20,21 +22,22 @@ end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("contact_point_response") then
-		go.set_position(go.get_position() + message.normal * message.distance)
+		if message.other_group == hash("env") then
+			go.set_position(go.get_position() + message.normal * message.distance)
+		end
 	end
 
 	if message_id == hash("collision_response") then
+		-- Blue Player Attack on Tower and Red Base
 		if message.own_group == hash("blue_attack") then
 			if message.other_group == hash("red_base_hitbox") then
 				self.key = "red"
 			elseif message.other_group == hash("tower_hitbox") then
 				self.key = "neutral"
 			end
-			g.room:send("attack_structure", { id = self.key, type = tostring(message.other_group), damage = 5 })
+			g.room:send("attack", { id = self.key, type = tostring(message.other_group), damage = 25 })			
 		end
 	end
-
-	
 end
 
 function on_input(self, action_id, action)
@@ -48,10 +51,6 @@ function on_input(self, action_id, action)
 		g.room:send("move", { direction = "right" })
 	elseif action_id == hash("attack") and action.pressed then
 		msg.post("#attack", "enable")
-		sprite.play_flipbook("#sprite", "attack", anim_reset)
-		
-		
-			g.room:send("attack", { target_id = self.target_id })
-		
+		sprite.play_flipbook("#sprite", "attack", anim_reset)		
 	end
 end

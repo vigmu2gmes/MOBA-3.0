@@ -3,8 +3,8 @@ components {
   component: "/cSCRIPTS/blue_players.script"
 }
 components {
-  id: "blue"
-  component: "/cRESOURCES/players/assets/gui/blue.gui"
+  id: "blue_player_gui"
+  component: "/cpGUI/blue_player_gui.gui"
 }
 embedded_components {
   id: "sprite"
@@ -26,6 +26,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"blue_hitbox\"\n"
   "mask: \"attack\"\n"
+  "mask: \"projectile\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -54,6 +55,8 @@ embedded_components {
   "group: \"blue_attack\"\n"
   "mask: \"red_base_hitbox\"\n"
   "mask: \"tower_hitbox\"\n"
+  "mask: \"minion\"\n"
+  "mask: \"red_player\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -80,6 +83,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"player\"\n"
   "mask: \"env\"\n"
+  "mask: \"proj_range\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

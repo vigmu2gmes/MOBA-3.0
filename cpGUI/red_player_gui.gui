@@ -1,0 +1,14 @@
+script: "/cSCRIPTS/gui/red_player.gui_script"
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "health_bar"
+  xanchor: XANCHOR_LEFT
+  pivot: PIVOT_SW
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

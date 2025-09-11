@@ -1,7 +1,5 @@
-local g = require("cSCRIPTS.game")
+local g = require("cSCRIPTS.GAME.game")
 
 function init(self)
-	g.create(self)
-
-	
+	g.create(self)	
 end
